@@ -18,4 +18,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\console\GildedRose.Console.csproj" />
+  </ItemGroup>
+
 </Project>

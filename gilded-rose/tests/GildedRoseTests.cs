@@ -129,4 +129,41 @@ public class GildedRoseTests
         Assert.Equal(12, item.Quality); // Increases by 2
         Assert.Equal(-2, item.SellIn);
     }
+    
+    [Fact]
+    public void ConjuredItem_DecreasesQualityTwiceAsFast_BeforeSellByDate()
+    {
+        var item = new Item { Name = "Conjured Item", SellIn = 5, Quality = 10 };
+        var gildedRose = new GildedRose.Console.GildedRose(new List<Item> { item });
+
+        gildedRose.UpdateQuality();
+
+        Assert.Equal(8, item.Quality); // Decreases by 2
+        Assert.Equal(4, item.SellIn);  // Decreases by 1
+    }
+
+    [Fact]
+    public void ConjuredItem_DecreasesQualityTwiceAsFast_AfterSellByDate()
+    {
+        var item = new Item { Name = "Conjured Item", SellIn = 0, Quality = 10 };
+        var gildedRose = new GildedRose.Console.GildedRose(new List<Item> { item });
+
+        gildedRose.UpdateQuality();
+
+        Assert.Equal(6, item.Quality); // Decreases by 4
+        Assert.Equal(-1, item.SellIn); // Decreases by 1
+    }
+
+    [Fact]
+    public void ConjuredItem_QualityNeverGoesNegative()
+    {
+        var item = new Item { Name = "Conjured Item", SellIn = 3, Quality = 1 };
+        var gildedRose = new GildedRose.Console.GildedRose(new List<Item> { item });
+
+        gildedRose.UpdateQuality();
+
+        Assert.Equal(0, item.Quality); // Quality stays at 0
+        Assert.Equal(2, item.SellIn);  // Decreases by 1
+    }
+
 }
